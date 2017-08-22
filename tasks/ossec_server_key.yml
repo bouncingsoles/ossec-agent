@@ -6,8 +6,8 @@
   delegate_to: "{{ossec_server_name}}"
   become: true
 
-#- debug: var=addhost
-#  tags: debug
+- debug: var=addhost
+  tags: debug
 
 #Using shell vs command because of PIPE, both will work.
 - name: Print the key for the host that was registered.
@@ -18,8 +18,8 @@
   delegate_to: "{{ossec_server_name}}"
   become: true
 
-#- debug: var=key
-#  tags: debug
+- debug: var=key
+  tags: debug
 
 - set_fact:
     ossec_agent_client_key="{{key.stdout}}"
