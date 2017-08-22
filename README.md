@@ -8,7 +8,7 @@ Used for install and automatic key generation of OSSEC clients.  This role allow
 Requirements
 ------------
 On the host you run the playbook, Ansible needs to be able to access your Ossec server to install the file to manage batch clients.
-# See project here: https://github.com/ossec/ossec-hids/blob/master/contrib/ossec-batch-manager.pl
+See project: https://github.com/ossec/ossec-hids/blob/master/contrib/ossec-batch-manager.pl
 
 Role Variables
 --------------
