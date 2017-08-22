@@ -4,7 +4,6 @@
     chdir: /var/ossec/bin
   register: addhost
   delegate_to: "{{ossec_server_name}}"
-  tags: add_key
   become: true
 
 #- debug: var=addhost
@@ -17,7 +16,6 @@
     chdir: /var/ossec/bin
   register: key
   delegate_to: "{{ossec_server_name}}"
-  tags: debug
   become: true
 
 #- debug: var=key
@@ -25,8 +23,6 @@
 
 - set_fact:
     ossec_agent_client_key="{{key.stdout}}"
-  tags: debug
 
 - debug:
     msg: "OSSEC KEY={{ ossec_agent_client_key }}"
-  tags: debug

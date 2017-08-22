@@ -8,12 +8,14 @@
     protect: no
     gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY.atomicorp.txt
     gpgcheck: yes
+  become: true
 
 - name: Install OSSEC via RPM
   yum:
     name:
       - ossec-hids
       - ossec-hids-client
+  become: true
 
 - name: Copy all files for systemd control for OSSEC
   copy:
@@ -23,6 +25,7 @@
     mode: 0644
   with_fileglob:
     - files/systemd/*
+  become: true
 
 - name: Install the OSSEC config file for linux.
   template:
@@ -32,18 +35,22 @@
     group: root
     mode: 0644
   notify: Restart Ossec Linux
+  become: true
 
 - name: Import the key into the linux client.
   shell: 'echo y | /var/ossec/bin/manage_agent -i {{ ossec_agent_client_key }}'
   ignore_errors: yes
   register: command_result
   failed_when: "'Invalid authentication key' in command_result.stderr"
+  become: true
 
 - debug:
     msg: "{{ command_result.stdout }}"
+  become: true
 
 - name: Make sure that the ossec-agentd service is running.
   service:
     name: ossec-agentd
     state: started
     enabled: yes
+  become: true
