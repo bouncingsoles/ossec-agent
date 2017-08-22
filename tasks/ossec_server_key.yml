@@ -25,4 +25,4 @@
     ossec_agent_client_key="{{key.stdout}}"
 
 - debug:
-    msg: "OSSEC KEY={{ ossec_agent_client_key }}"
+    msg: "OSSEC KEY:{{ ossec_agent_client_key }}"
