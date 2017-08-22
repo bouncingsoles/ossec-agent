@@ -22,6 +22,7 @@
   win_shortcut:
     src: 'C:\Program Files (x86)\ossec-agent\win32ui.exe'
     dest: C:\Users\Public\Desktop\Ossec Agent Manager.lnk
+    directory: 'C:\Program Files (x86)\ossec-agent\'
 
 - name: Template file for ossec.conf copied to server.
   win_template:
