@@ -21,6 +21,12 @@
 <ossec_config>
 
   <!-- One entry for each file/Event log to monitor. -->
+
+  <localfile>
+    <location>C:\inetpub\logs\LogFiles\W3SVC1\u_ex%y%m%d.log</location>
+    <log_format>iis</log_format>
+  </localfile>
+
   <localfile>
     <location>Application</location>
     <log_format>eventlog</log_format>
