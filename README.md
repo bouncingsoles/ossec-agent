@@ -1,13 +1,13 @@
 ossec-agent
 =========
-Used for install and automatic key generation of OSSEC clients.  Currently, there was no way to auto generate keys for windows hosts.
+Used for install and automatic key generation of OSSEC clients.  This role allows you to register hosts on Windows and Linux without having to enable auto-enroll or install any additional services.  
 
 - Connects to the OSSEC server and uses a batch control script (included) to generate keys.
-- Uses the keys generated in the playbook to register the hosts.
+- Uses the keys generated in the playbook to register the hosts for Windows and Linux.
 
 Requirements
 ------------
-Ansible needs control of the ossec server to install the file to manage batch clients.
+On the host you run the playbook, Ansible needs to be able to access your Ossec server to install the file to manage batch clients.
 
 Role Variables
 --------------
@@ -44,7 +44,7 @@ ossec_server: 'X.X.X.X'
 
 Dependencies
 ------------
-- Function OSSEC server running Linux
+- A working OSSEC server running Linux that can be controlled by your host running Ansible.
 
 Example Playbook
 ----------------
@@ -54,7 +54,6 @@ Example Playbook
   hosts: xx-xx-server
   roles:
      - bouncingsoles.ossec-agent
-  become: yes
 ```
 
 License
