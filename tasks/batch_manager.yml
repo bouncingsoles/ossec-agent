@@ -1,0 +1,8 @@
+---
+## See project here: https://github.com/ossec/ossec-hids/blob/master/contrib/ossec-batch-manager.pl
+- name: Copy ossec-batch-manager to our OSSEC server.  (File is not included in default ossec install.)
+  copy:
+     src: files/ossec-batch-manager.pl
+     dest: /var/ossec/bin/ossec-batch-manager.pl
+  become: true
+  delegate_to: "{{ossec_server_name}}"

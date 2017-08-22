@@ -1,0 +1,32 @@
+- name: Add the host to OSSEC DB
+  shell: ./ossec-batch-manager.pl -a --name {{ansible_hostname}} --ip {{ip_address}}
+  args:
+    chdir: /var/ossec/bin
+  register: addhost
+  delegate_to: "{{ossec_server_name}}"
+  tags: add_key
+  become: true
+
+#- debug: var=addhost
+#  tags: debug
+
+#Using shell vs command because of PIPE, both will work.
+- name: Print the key for the host that was registered.
+  shell: ./ossec-batch-manager.pl -e {{ansible_hostname}} | awk '{ print $2}'
+  args:
+    chdir: /var/ossec/bin
+  register: key
+  delegate_to: "{{ossec_server_name}}"
+  tags: debug
+  become: true
+
+#- debug: var=key
+#  tags: debug
+
+- set_fact:
+    ossec_agent_client_key="{{key.stdout}}"
+  tags: debug
+
+- debug:
+    msg: "OSSEC KEY={{ ossec_agent_client_key }}"
+  tags: debug

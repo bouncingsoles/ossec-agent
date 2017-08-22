@@ -1,0 +1,7 @@
+---
+- include: batch_manager.yml
+- include: ossec_server_key.yml
+- include: windows.yml
+  when: ansible_system == "Win32NT"
+- include: linux.yml
+  when: ansible_system == "Linux"

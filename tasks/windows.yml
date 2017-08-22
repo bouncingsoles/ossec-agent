@@ -1,0 +1,42 @@
+---
+#Download the agent to the machine
+- name: Check if ossec install file is present.
+  win_stat:
+    path: 'c:\temp\{{ ossec_file }}'
+  register: file_info
+
+- name: "Download ossec file {{ossec_file}} if missing."
+  win_get_url:
+    url: '{{ ossec_url }}'
+    dest: 'c:\temp\{{ ossec_file }}'
+  when: not file_info.stat.exists
+
+- name: "Silent install of {{ossec_file}} "
+  win_command: 'C:\temp\{{ ossec_file }} /S'
+  args:
+    executable: cmd
+    creates: 'c:\Program Files (x86)\ossec-agent'
+  register: install
+
+- name: Template file for ossec.conf copied to server.
+  win_template:
+    src: templates/ossec.conf.win.j2
+    dest: 'C:\Program Files (x86)\ossec-agent\ossec.conf'
+  notify: Restart Ossec Windows
+
+- name: Register the key we generated from the ossec server.
+  win_shell: 'echo y | "c:\Program Files (x86)\ossec-agent\manage_agents.exe" -i  {{ ossec_agent_client_key }}'
+  args:
+    executable: cmd
+    chdir: 'c:\Program Files (x86)\ossec-agent'
+  register: command_result
+  failed_when: "'Invalid authentication key' in command_result.stderr"
+
+- debug:
+    msg: "{{ command_result.stdout }}"
+
+- name: Start ossec agent
+  win_service:
+    name: OssecSvc
+    start_mode: auto
+    state: started

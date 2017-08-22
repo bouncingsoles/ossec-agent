@@ -1,0 +1,49 @@
+- name: Add OSSEC Repo for RHEL and CentOS
+  yum_repository:
+    name: atomic
+    description: Atomic Rocket Turtle RPM Repository for CentOS / Red Hat Enterprise Linux 7
+    file: external_repos
+    mirrorlist: http://updates.atomicorp.com/channels/mirrorlist/atomic/centos-$releasever-$basearch
+    enabled: yes
+    protect: no
+    gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY.atomicorp.txt
+    gpgcheck: yes
+
+- name: Install OSSEC via RPM
+  yum:
+    name:
+      - ossec-hids
+      - ossec-hids-client
+
+- name: Copy all files for systemd control for OSSEC
+  copy:
+    src: "{{ item }}"
+    dest: /etc/systemd/system/
+    owner: root
+    mode: 0644
+  with_fileglob:
+    - files/systemd/*
+
+- name: Install the OSSEC config file for linux.
+  template:
+    src: templates/ossec.conf.linux.j2
+    dest: /var/ossec/etc/ossec-agent.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart Ossec Linux
+
+- name: Import the key into the linux client.
+  shell: 'echo y | /var/ossec/bin/manage_agent -i {{ ossec_agent_client_key }}'
+  ignore_errors: yes
+  register: command_result
+  failed_when: "'Invalid authentication key' in command_result.stderr"
+
+- debug:
+    msg: "{{ command_result.stdout }}"
+
+- name: Make sure that the ossec-agentd service is running.
+  service:
+    name: ossec-agentd
+    state: started
+    enabled: yes
