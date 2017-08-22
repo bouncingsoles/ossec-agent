@@ -35,8 +35,8 @@
 - debug:
     msg: "{{ command_result.stdout }}"
 
-- name: Start ossec agent
+- name: Restart the ossec agent
   win_service:
     name: OssecSvc
     start_mode: auto
-    state: started
+    state: restarted
