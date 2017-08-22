@@ -1,6 +1,6 @@
 ossec-agent
 =========
-Used for install and automatic key generation of OSSEC clients.
+Used for install and automatic key generation of OSSEC clients.  Will
 
 - Connects to the OSSEC server and uses a batch control script to generate keys.
 - Uses the keys grabbed from the script to register the hosts.
@@ -12,7 +12,8 @@ Ansible needs control of the ossec server to install the file to manage batch cl
 Role Variables
 --------------
 Please define the following variables in host_vars for your server.
-WINDOWS:
+
+WINDOWS HOST VARS:
  - ossec_url:
    - URL to obtain the OSSEC windows package to install
  - ossec_file:
@@ -20,19 +21,20 @@ WINDOWS:
  - ossec_server:
    - The IP address of your OSSEC server.
 
-LINUX:
-- ip_address
+LINUX HOST VARS:
+ - ip_address
    - The IP address to use to register your host.  You can use ansible defined variable or type it in.
-- ossec_server
+ - ossec_server
    - The OSSEC server your client will make connections to.
 
 Example host_vars file:
 ```sh
-#Windows
+#Windows hosts vars to define
 ossec_url: 'https://updates.atomicorp.com/channels/atomic/windows/ossec-agent-win32-2.9.0-1738.exe'
 ossec_file: 'ossec-agent-win32-2.9.0-1738.exe'
 ossec_server: 'X.X.X.X'
-#Linux
+
+#Linux host vars to define
 ip_address: "{{ ansible_all_ipv4_addresses.0 }}"
 ossec_server: 'X.X.X.X'
 ```
@@ -54,10 +56,8 @@ Example Playbook
 
 License
 -------
-
 BSD
 
 Author Information
 ------------------
-
 Patrick Durante
