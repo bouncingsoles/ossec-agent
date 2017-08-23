@@ -7,7 +7,7 @@ Used for install and automatic key generation of OSSEC clients.  This role allow
 
 Requirements
 ------------
-On the host you run the playbook, Ansible needs to be able to access your Ossec server to copy the script included in this role to the installation path of OSSEC.  The file copied use to batch the API keys is here.
+On the host you run the playbook, Ansible needs to be able to access your Ossec server to copy the script included in this role to the installation path of OSSEC.  The file copied to generate the API keys is here.
 See project: https://github.com/ossec/ossec-hids/blob/master/contrib/ossec-batch-manager.pl
 
 Role Variables
