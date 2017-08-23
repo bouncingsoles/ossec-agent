@@ -1,6 +1,6 @@
 galaxy_info:
   author: Patrick Durante
-  description: Module that will generate the ossec key and install the HID on the client.
+  description: Generates Ossec keys for both Windows and Linux. Manages install of software on both types of hosts.
   company: None
 
   license: MIT / BSD
