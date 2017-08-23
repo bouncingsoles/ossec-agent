@@ -1,3 +1,8 @@
+- name: Make sure OSSEC GPG Key is present
+  rpm_key:
+    state: present
+    key: https://www.atomicorp.com/RPM-GPG-KEY.atomicorp.txt
+
 - name: "Linux: Add OSSEC Repo for RHEL and CentOS"
   yum_repository:
     name: atomic
