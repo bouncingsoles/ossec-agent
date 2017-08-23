@@ -22,13 +22,17 @@ WINDOWS HOST VARS:
  - ossec_file:
    - Name of the file used in package above.
  - ossec_server:
-   - The IP address of your OSSEC server.
+   - The IP address of your OSSEC server, this will be added to the ossec conf template file.
 
 LINUX HOST VARS:
  - ip_address
    - The IP address to use to register your host.  You can use ansible defined variable or type it in.
  - ossec_server
-   - The OSSEC server your client will make connections to.
+   - The IP address of your OSSEC server, this will be added to the ossec conf template file.
+
+EXTRA_VARS:
+ - ossec_server_name: 
+   - Hostname of you ossec server.  You can add this to the playbook like in the example below as vars.
 
 Example host_vars file:
 ```sh
@@ -55,6 +59,10 @@ Example Playbook
   hosts: xx-xx-server
   roles:
      - bouncingsoles.ossec-agent
+  vars:
+  #Your OSSEC server, tasks to create keys will be delegate_to it.
+    ossec_server_name: ossec-servername-01
+
 ```
 
 License
