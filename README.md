@@ -33,6 +33,7 @@ LINUX HOST VARS:
 EXTRA_VARS:
  - ossec_server_name: 
    - Hostname of you ossec server.  You can add this to the playbook like in the example below as vars.
+   - Tasks are delegated to it so make sure ansible can control this host as well to generate your API keys for OSSEC.
 
 Example host_vars file:
 ```sh
